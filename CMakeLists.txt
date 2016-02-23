@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(warlight_starterbot_master)
+project(ece368_warlight)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
@@ -17,4 +17,4 @@ set(SOURCE_FILES
     SuperRegion.cpp
     SuperRegion.h)
 
-add_executable(warlight_starterbot_master ${SOURCE_FILES})
+add_executable(ece368_warlight ${SOURCE_FILES})
