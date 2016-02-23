@@ -6,7 +6,7 @@ CC = g++
 CC_FLAGS = -w -std=c++11
 
 # File names
-EXEC = run
+EXEC = bot
 SOURCES = $(wildcard *.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
 
