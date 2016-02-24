@@ -62,7 +62,7 @@ void Bot::makeMoves()
 			target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
 		}
 		move << botName << " attack/transfer " << i << " "
-				<< target << " "
+ 				<< target << " "
 				<< (regions[i].getArmies() - 1);
 		moves.push_back(move.str());
 	}

@@ -1,1 +1,7 @@
+
 *.cbp
+*.o
+*.exe
+*.bin
+*.zip
+*.xml
