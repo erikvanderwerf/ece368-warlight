@@ -5,3 +5,6 @@
 *.bin
 *.zip
 *.xml
+*.dot
+*.svg
+*.html
