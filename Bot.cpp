@@ -8,6 +8,7 @@
 //tools
 #include "tools/StringManipulation.h"
 
+
 Bot::Bot() :
 		armiesLeft(0), timebank(0), timePerMove(0), maxRounds(0), parser(this), phase(NONE)
 {
@@ -31,22 +32,66 @@ void Bot::pickStartingRegion()
 
 void Bot::placeArmies()
 {
-	// START HERE!
-	unsigned region = std::rand() % ownedRegions.size();
-	std::cout << botName << " place_armies " << ownedRegions[region] << " " << armiesLeft
-			<< std::endl;
-	addArmies(ownedRegions[region], armiesLeft);
+
+	/*loops through all of the owned regions, and adds all of the armies to the first region that is next to a region not
+	 * owned by us */
+	for(int i = 0; i < ownedRegions.size(); i++)
+	{
+		//loops through each of the neibhors
+		for(int j = 0; j < regions[ownedRegions[i]].getNbNeighbors(); j++)
+		{
+			//check if there is a neibhor that is not me. If so, add all of my armies to it
+			if(regions[regions[ownedRegions[i]].getNeighbor(j)].getOwner() != ME  && armiesLeft > 0)
+			{
+					std::cout << botName << " place_armies " << ownedRegions[i] << " " << armiesLeft
+					<< std::endl;
+			}
+
+		}
+
+	}
 }
+
 
 void Bot::makeMoves()
 {
-	// START HERE!
-	/// Output No moves when you have no time left or do not want to commit any moves.
-	// std::cout << "No moves "  << std::endl;
 	/// Anatomy of a single move
 	//  std::cout << botName << " attack/transfer " << from << " " << to << " "<< armiesMoved;
 	/// When outputting multiple moves they must be seperated by a comma
+
+
 	std::vector<std::string> moves;
+
+
+	//loops through all of the owned regions
+	for(int i = 0; i < ownedRegions.size(); i++)
+	{
+		std::stringstream move;
+		int target;
+
+		if (regions[ownedRegions[i]].getArmies() <= 1)
+			continue;
+
+		//loops through each of the neibhors
+		for(int j = 0; j < regions[ownedRegions[i]].getNbNeighbors(); j++)
+		{
+			target = regions[ownedRegions[i]].getNeighbor(j);
+
+			if(regions[target].getOwner() != ME)
+			{
+				break;
+			}
+		}
+		move << botName << " attack/transfer " << ownedRegions[i] << " "
+		<< target << " "
+		<< (regions[ownedRegions[i]].getArmies() - 1);
+		moves.push_back(move.str());
+
+
+	}
+	std::cout << string::join(moves) << std::endl;
+
+	/*std::vector<std::string> moves;
 	for (size_t j = 0; j < ownedRegions.size(); ++j)
 	{
 		std::stringstream move;
@@ -67,7 +112,7 @@ void Bot::makeMoves()
 		moves.push_back(move.str());
 	}
 
-	std::cout << string::join(moves) << std::endl;
+	std::cout << string::join(moves) << std::endl;*/
 }
 
 void Bot::addRegion(const unsigned& noRegion, const unsigned& noSuperRegion)

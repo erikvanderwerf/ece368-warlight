@@ -14,6 +14,7 @@ OBJECTS = $(SOURCES:.cpp=.o)
 $(EXEC): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $(EXEC)
 
+
 # To obtain object files
 %.o: %.cpp
 	$(CC) -c $(CC_FLAGS) $< -o $@
