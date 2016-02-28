@@ -17,6 +17,7 @@ Bot::Bot() :
 Bot::~Bot()
 {
     //git test
+    //conflict hopefuly
 }
 
 void Bot::playGame()
