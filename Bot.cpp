@@ -1,6 +1,7 @@
 // stl
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 //project
 #include "Bot.h"
@@ -16,7 +17,9 @@ Bot::Bot() :
 
 Bot::~Bot()
 {
-
+    //git test
+    //conflict hopefuly
+    //milos is making me do things
 }
 
 void Bot::playGame()
