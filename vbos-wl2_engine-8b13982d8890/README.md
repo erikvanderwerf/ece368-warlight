@@ -26,7 +26,7 @@ To compile (Linux):
 To run:
 
     cd [project folder]
-    java -cp lib/java-json.jar:bin com.theaigames.game.warlight2.Warlight2 [map file] [your bot1] [your bot2] 2>err.txt 1>out.txt
+    *Java sucks balls java -cp lib/java-json.jar:bin com.theaigames.game.warlight2.Warlight2 [map file] [your bot1] [your bot2] 2>err.txt 1>out.txt
 
 [map file] is a file that contains a string representation of the map
 that the game will use. An example is included in this repository
