@@ -1,6 +1,7 @@
 // stl
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 //project
 #include "Bot.h"
