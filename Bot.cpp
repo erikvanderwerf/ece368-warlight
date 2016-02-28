@@ -16,7 +16,7 @@ Bot::Bot() :
 
 Bot::~Bot()
 {
-    //git test
+    //milos is making me do things
 }
 
 void Bot::playGame()
