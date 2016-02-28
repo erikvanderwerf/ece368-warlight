@@ -58,9 +58,16 @@ void Bot::makeMoves()
 		// prefer enemy regions
 		for ( unsigned k = 0; k < 5; ++k)
 		{
-			if(regions[target].getOwner() != ME) break;
-			target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
+			if(regions[target].getOwner() == ME)
+			{
+				target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
+			} else if (regions[target].getArmies() > (regions[i].getArmies() * 2 + 1)) {
+				break;
+			} else {
+				target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
+			}
 		}
+		
 		move << botName << " attack/transfer " << i << " "
  				<< target << " "
 				<< (regions[i].getArmies() - 1);
