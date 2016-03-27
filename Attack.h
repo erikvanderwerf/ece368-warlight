@@ -4,4 +4,4 @@
 
 class Attack: public MoveGenerator {
 	virtual std::vector<Move> generageMove();
-}
+};

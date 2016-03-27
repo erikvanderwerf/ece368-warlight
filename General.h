@@ -10,11 +10,7 @@
 #include "Attack.h"
 #include "Defense.h"
 
-typedef struct Move {
-    Region* from;
-    Region* to;
-    int number_of_troops;
-} Move;
+class Map;
 
 class General {
     
@@ -23,19 +19,17 @@ class General {
         General();
         
         virtual ~General();
-        
-        
+
         /** \brief Calculates the suggested attacks for this turn.
          *
          *
-         */                          
-        //std::vector<SUGGESTED_MOVE> getAttack();
+         */
+        std::vector<Move> getAttack();
         
-        /** \brief Calculates the suggested defensive moves for this turn.
-         * a suggested move can be to keep troops in a region.
+        /** \brief Returns the calculated deployment for this turn.
          *
          */  
-        //std::vector<SUGGESTED_MOVE> getDefense();
+        std::vector<Move> getDeployment();
         
         /** calculateStrategy
          *  
@@ -43,22 +37,7 @@ class General {
          *  prioritizes different attacks and moves taking into account the
          *  results from getAttack and getDefense.
          */
-        //std::vector<SUGGESTED_MOVE> calculateStrategy(); //will clear suggested attacks and suggested defences
-        
-        /** \brief This function places the number of reinforcements according the weights calculated by the general.
-         *
-         * \param numReinforcements int the number of reinforcements available to add
-         * \return void
-         */                                            
-        //std::vector<SUGGESTED_MOVE> placeReinforcements(int numReinforcements); //may need additional parameters later
-        
-        /** makeMoves
-         *  
-         *  This function makes the attacks and transfers during the attack/transfer
-         *  phase.
-         *  
-         */
-        //void makeMoves(); //calling this function will clear m_suggestedMoves
+        void calculateTurn(float time);
 
     private:
         
@@ -71,9 +50,6 @@ class General {
         //std::vector<SUGGESTED_MOVE> m_suggestedReinforcements;
         
         //std::vector<SUGGESTED_MOVE> m_plannedMoves;
-        
-        Attack attack;
-        Defense defence;
 
         //Map gameMap;
         

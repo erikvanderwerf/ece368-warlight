@@ -4,4 +4,4 @@
 
 class Defense: public MoveGenerator {
 	
-}
+};
