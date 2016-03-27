@@ -7,11 +7,11 @@
 #include "region.h"
 #include "SuperRegion.h"
 
-typedef struct suggested_Move {
+typedef struct SUGGESTED_MOVE {
     Region* from;
     Region* to;
     float percentageMove; //a float who's value is from 0 to 1, representing the percent of available troops to move, always leaving 1.
-}SuggestedMove;
+} SUGGESTED_MOVE;
 
 class General {
     
@@ -26,13 +26,13 @@ class General {
          *
          *
          */                          
-        void getAttack();
+        std::vector<SUGGESTED_MOVE> getAttack();
         
         /** \brief Calculates the suggested defensive moves for this turn.
          * a suggested move can be to keep troops in a region.
          *
-         */                          
-        void getDefense();
+         */  
+        std::vector<SUGGESTED_MOVE> getDefense();
         
         /** calculateStrategy
          *  
@@ -40,14 +40,14 @@ class General {
          *  prioritizes different attacks and moves taking into account the
          *  results from getAttack and getDefense.
          */
-        void calculateStrategy(); //will clear suggested attacks and suggested defences
+        std::vector<SUGGESTED_MOVE> calculateStrategy(); //will clear suggested attacks and suggested defences
         
         /** \brief This function places the number of reinforcements according the weights calculated by the general.
          *
          * \param numReinforcements int the number of reinforcements available to add
          * \return void
          */                                            
-        void placeReinforcements(int numReinforcements); //may need additional parameters later
+        std::vector<SUGGESTED_MOVE> placeReinforcements(int numReinforcements); //may need additional parameters later
         
         /** makeMoves
          *  
@@ -57,22 +57,19 @@ class General {
          */
         void makeMoves(); //calling this function will clear m_suggestedMoves
 
-    protected:
-        
-
     private:
         
-        std::vector<SuggestedMove*> m_suggestedAttacks;
+        std::vector<SUGGESTED_MOVE> m_suggestedAttacks;
         
-        std::vector<SuggestedMove*> m_suggestedDefenses; //suggested moves with to and from as the same region
+        //suggested moves with to and from as the same region
+        std::vector<SUGGESTED_MOVE> m_suggestedDefenses;
         
-        std::vector<SuggestedMove*> m_suggestedReinforcements; //suggested moves with from region as null
+        //suggested moves with from region as null
+        std::vector<SUGGESTED_MOVE> m_suggestedReinforcements;
         
-        std::vector<SuggestedMove*> m_plannedMoves;
+        std::vector<SUGGESTED_MOVE> m_plannedMoves;
         
-        Map* gameMap;
-        
-        Bot* m_bot;
+        Map gameMap;
         
 };
 
