@@ -7,17 +7,20 @@
 #include "region.h"
 #include "SuperRegion.h"
 
-typedef struct SUGGESTED_MOVE {
+#include "Attack.h"
+#include "Defense.h"
+
+typedef struct Move {
     Region* from;
     Region* to;
-    float percentageMove; //a float who's value is from 0 to 1, representing the percent of available troops to move, always leaving 1.
-} SUGGESTED_MOVE;
+    int number_of_troops;
+} Move;
 
 class General {
     
     public:
         
-        General(Bot* bot);
+        General();
         
         virtual ~General();
         
@@ -26,13 +29,13 @@ class General {
          *
          *
          */                          
-        std::vector<SUGGESTED_MOVE> getAttack();
+        //std::vector<SUGGESTED_MOVE> getAttack();
         
         /** \brief Calculates the suggested defensive moves for this turn.
          * a suggested move can be to keep troops in a region.
          *
          */  
-        std::vector<SUGGESTED_MOVE> getDefense();
+        //std::vector<SUGGESTED_MOVE> getDefense();
         
         /** calculateStrategy
          *  
@@ -40,14 +43,14 @@ class General {
          *  prioritizes different attacks and moves taking into account the
          *  results from getAttack and getDefense.
          */
-        std::vector<SUGGESTED_MOVE> calculateStrategy(); //will clear suggested attacks and suggested defences
+        //std::vector<SUGGESTED_MOVE> calculateStrategy(); //will clear suggested attacks and suggested defences
         
         /** \brief This function places the number of reinforcements according the weights calculated by the general.
          *
          * \param numReinforcements int the number of reinforcements available to add
          * \return void
          */                                            
-        std::vector<SUGGESTED_MOVE> placeReinforcements(int numReinforcements); //may need additional parameters later
+        //std::vector<SUGGESTED_MOVE> placeReinforcements(int numReinforcements); //may need additional parameters later
         
         /** makeMoves
          *  
@@ -55,21 +58,24 @@ class General {
          *  phase.
          *  
          */
-        void makeMoves(); //calling this function will clear m_suggestedMoves
+        //void makeMoves(); //calling this function will clear m_suggestedMoves
 
     private:
         
-        std::vector<SUGGESTED_MOVE> m_suggestedAttacks;
+        //std::vector<SUGGESTED_MOVE> m_suggestedAttacks;
         
         //suggested moves with to and from as the same region
-        std::vector<SUGGESTED_MOVE> m_suggestedDefenses;
+        //std::vector<SUGGESTED_MOVE> m_suggestedDefenses;
         
         //suggested moves with from region as null
-        std::vector<SUGGESTED_MOVE> m_suggestedReinforcements;
+        //std::vector<SUGGESTED_MOVE> m_suggestedReinforcements;
         
-        std::vector<SUGGESTED_MOVE> m_plannedMoves;
+        //std::vector<SUGGESTED_MOVE> m_plannedMoves;
         
-        Map gameMap;
+        Attack attack;
+        Defense defence;
+
+        //Map gameMap;
         
 };
 

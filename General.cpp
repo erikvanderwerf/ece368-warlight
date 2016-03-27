@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-General::General(Bot* bot) {
-    m_bot = bot;
-}
+/*General::General() {}
 
 General::~General() {
     
@@ -52,3 +50,4 @@ void General::makeMoves(){
     m_suggestedReinforcements.clear();
     m_plannedMoves.clear();
 }
+*/
