@@ -2,10 +2,8 @@
 
 #include <vector>
 
-#include "General.h"
-
-struct Move;
+#include "Move.h"
 
 class MoveGenerator {
-	virtual std::vector<Move> generateMoves();
+	virtual std::vector<Move> generateMoves() = 0;
 };

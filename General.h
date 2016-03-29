@@ -3,56 +3,51 @@
 
 #include <vector>
 
-#include "Bot.h"
-#include "region.h"
-#include "SuperRegion.h"
-
-#include "Attack.h"
-#include "Defense.h"
-
-class Map;
+#include "Map.h"
+#include "Move.h"
 
 class General {
-    
-    public:
-        
-        General();
-        
-        virtual ~General();
+public:
+	// Constructor/Destructor
+    General();
+    virtual ~General();
 
-        /** \brief Calculates the suggested attacks for this turn.
-         *
-         *
-         */
-        std::vector<Move> getAttack();
-        
-        /** \brief Returns the calculated deployment for this turn.
-         *
-         */  
-        std::vector<Move> getDeployment();
-        
-        /** calculateStrategy
-         *  
-         *  This function prioritizes different troop placements and
-         *  prioritizes different attacks and moves taking into account the
-         *  results from getAttack and getDefense.
-         */
-        void calculateTurn(float time);
+	/** int pickStartingRegions(std::vector<int> pickfrom);
+	 * @param std::vector<Region&> pickfrom List of possible regions to start with.
+	 * Returns the desired starting regions.
+	 */
+	int pickStartingRegions(std::vector<int> pickfrom);
 
-    private:
+    /** std::vector<Move> getAttack();
+	 * Calculates the suggested attacks for this turn.
+	 */
+	std::vector<Move> getAttack();
         
-        //std::vector<SUGGESTED_MOVE> m_suggestedAttacks;
+    /** std::vector<Move> getDeployment();
+	 * Returns the calculated deployment for this turn.
+     */  
+    std::vector<Move> getDeployment();
         
-        //suggested moves with to and from as the same region
-        //std::vector<SUGGESTED_MOVE> m_suggestedDefenses;
-        
-        //suggested moves with from region as null
-        //std::vector<SUGGESTED_MOVE> m_suggestedReinforcements;
-        
-        //std::vector<SUGGESTED_MOVE> m_plannedMoves;
+    /** void calculateTurn(float time);
+     *  This function prioritizes different troop placements and
+     *  prioritizes different attacks and moves taking into account the
+     *  results from getAttack and getDefense.
+     */
+    void calculateTurn();
 
-        //Map gameMap;
+	Map map;
+private:
         
+    //std::vector<SUGGESTED_MOVE> m_suggestedAttacks;
+        
+    //suggested moves with to and from as the same region
+    //std::vector<SUGGESTED_MOVE> m_suggestedDefenses;
+        
+    //suggested moves with from region as null
+    //std::vector<SUGGESTED_MOVE> m_suggestedReinforcements;
+        
+    //std::vector<SUGGESTED_MOVE> m_plannedMoves;
+
 };
 
-#endif // GENERAL_H
+#endif // !GENERAL_H

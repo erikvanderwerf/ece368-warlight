@@ -1,29 +1,33 @@
 #include "General.h"
 
-#include <iostream>
-
-/*General::General() {}
+General::General() {}
 
 General::~General() {
     
 }
 
+int General::pickStartingRegions(std::vector<int> pickfrom) {
+	return pickfrom.front();
+}
 
-void General::getAttack(){
+std::vector<Move> General::getAttack() {
+	if (map.isDirty()) calculateTurn();
+	return std::vector<Move>();
+}
+
+
+std::vector<Move> General::getDeployment() {
+	if (map.isDirty()) calculateTurn();
+	return std::vector<Move>();
+}
+
+
+void General::calculateTurn() {
     
 }
 
 
-void General::getDefense(){
-    
-}
-
-
-void General::calculateStrategy(){
-    
-}
-
-
+/*
 void General::placeReinforcements(int numReinforcements){
     float sumWeights = 0;
     for(SuggestedMove* sugRein : m_suggestedReinforcements){

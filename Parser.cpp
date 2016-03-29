@@ -23,28 +23,25 @@ Parser::~Parser()
 void Parser::parseInput()
 {
 	std::string inputType;
-	while (std::cin >> inputType)
+	std::cin >> inputType;
+	if (inputType == "setup_map")
+		parseSetupMap();
+	else if (inputType == "settings")
+		parseSettings();
+	else if (inputType == "update_map")
+		parseUpdateMap();
+	else if (inputType == "opponent_moves")
+		parseOpponentMoves();
+	else if (inputType == "pick_starting_region")
+		parsePickStartingRegion();
+	else if (inputType == "go")
+		parseGo();
+	else
 	{
-		if (inputType == "setup_map")
-			parseSetupMap();
-		else if (inputType == "settings")
-			parseSettings();
-		else if (inputType == "update_map")
-			parseUpdateMap();
-		else if (inputType == "opponent_moves")
-			parseOpponentMoves();
-		else if (inputType == "pick_starting_region")
-			parsePickStartingRegion();
-		else if (inputType == "go")
-			parseGo();
-		else
-		{
-			std::string line;
-			getline(std::cin, line);
-			std::cerr  << inputType << " " << line << std::endl;
-		}
-
-		theBot->executeAction();
+		// Invalid inputType
+		std::string line;
+		getline(std::cin, line);
+		std::cerr  << inputType << " " << line << std::endl;
 	}
 }
 
@@ -119,12 +116,18 @@ void Parser::parseSettings()
 void Parser::parseUpdateMap()
 {
 	std::string playerName;
+	Player player;
 	unsigned noRegion;
 	int nbArmies;
-	theBot->resetRegionsOwned();
 	while (std::cin >> noRegion >> playerName >> nbArmies)
 	{
-		theBot->updateRegion(noRegion, playerName, nbArmies);
+		if (theBot->botName == playerName)
+			player = ME;
+		else if (theBot->opponentBotName == playerName)
+			player = ENEMY;
+		else
+			player = NEUTRAL;
+		theBot->general.map.updateRegion(noRegion, player, nbArmies);
 		if (lineEnds())
 			break;
 	}
@@ -156,20 +159,20 @@ void Parser::parseOpponentMoves()
 void Parser::parseGo()
 {
 	std::string phase;
-	int delay;
-	std::cin >> phase >> delay;
-	theBot->startDelay(delay);
+	int timebank;
+	std::cin >> phase >> timebank;
+	theBot->setTimebank(timebank);
 	if (phase == "place_armies")
 	{
-		theBot->setPhase(Bot::PLACE_ARMIES);
-		return;
+		theBot->placeArmies();
+		//return;
 	}
 	if (phase == "attack/transfer")
 	{
-		theBot->setPhase(Bot::ATTACK_TRANSFER);
-		return;
+		theBot->makeMoves();
+		//return;
 	}
-	throw std::invalid_argument("Cannot handle " + phase + "correctly");
+	//throw std::invalid_argument("Cannot handle " + phase + "correctly");
 }
 
 void Parser::parseSuperRegions()
@@ -178,7 +181,7 @@ void Parser::parseSuperRegions()
 	int reward;
 	while (std::cin >> super >> reward)
 	{
-		theBot->addSuperRegion(super, reward);
+		theBot->general.map.addSuperRegion(super, reward);
 		if (lineEnds())
 			break;
 	}
@@ -189,7 +192,7 @@ void Parser::parseRegions()
 	unsigned super, region;
 	while (std::cin >> region >> super)
 	{
-		theBot->addRegion(region, super);
+		theBot->general.map.addRegion(region, super);
 		if (lineEnds())
 			break;
 	}
@@ -200,7 +203,7 @@ void Parser::parsePickStartingRegion()
 	int region;
 	int delay;
 	std::cin >> delay;
-	theBot->startDelay(delay);
+	theBot->setTimebank(delay);
 	theBot->clearStartingRegions();
 	while (std::cin >> region)
 	{
@@ -208,7 +211,6 @@ void Parser::parsePickStartingRegion()
 		if (lineEnds())
 			break;
 	}
-	theBot->setPhase(Bot::PICK_STARTING_REGION);
 }
 
 void Parser::parseOpponentStartingRegions()
@@ -233,12 +235,10 @@ void Parser::parseNeighbors()
 		neighbors_flds.clear();
 		string::split(neighbors_flds, neighbors);
 		for (unsigned i = 0; i < neighbors_flds.size(); i++)
-			theBot->addNeighbors(region, atoi(neighbors_flds[i].c_str()));
+			theBot->general.map.setNeighbors(region, atoi(neighbors_flds[i].c_str()));
 		if (lineEnds())
 			break;
 	}
-	// TODO:
-	//theBot->setPhase(Bot::FIND_BORDERS);
 }
 
 void Parser::parseWastelands()
@@ -246,7 +246,7 @@ void Parser::parseWastelands()
 	unsigned region;
 	while (std::cin >> region)
 	{
-		theBot->addWasteland(region);
+		theBot->general.map.setWasteland(region);
 		if (lineEnds())
 			break;
 	}
