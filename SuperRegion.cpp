@@ -15,7 +15,7 @@ SuperRegion::~SuperRegion()
 {
 }
 
-void SuperRegion::addRegion(const int& region)
+void SuperRegion::addRegion(Region* region)
 {
 	regions.push_back(region);
 }

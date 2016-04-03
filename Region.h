@@ -8,27 +8,29 @@
 // project
 #include "main.h"
 
+class SuperRegion;
+
 class Region
 {
 public:
 	Region();
-	Region(const int& pId, const  int& superRegion);
+	Region(const int& pId, SuperRegion& superRegion);
 	virtual ~Region();
 
-	void addNeighbor(const int& neighbor);
+	void addNeighbor(Region* neighbor);
 	void setArmies(const int& nbArmies) { armies = nbArmies; }
 	void setOwner(const Player& pOwner){ owner = pOwner; }
 
 	inline int getArmies() const { return armies; }
 	inline Player getOwner() const { return owner; }
-	inline int getSuperRegion() const { return superRegion; }
-	int getNeighbor(const size_t& index) const ;
+	inline SuperRegion& getSuperRegion() const { return *superRegion; }
+	std::vector<Region*> getNeighbors() const;
 	int getNbNeighbors() const;
 
-private:
-	std::vector<int> neighbors;
 	int id;
-	int superRegion;
+	SuperRegion* superRegion;
+private:
+	std::vector<Region*> neighbors;
 	Player owner;
 	int armies;
 };

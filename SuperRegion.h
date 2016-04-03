@@ -1,5 +1,5 @@
-#ifndef SUPERREGION_H_INCLUDED
-#define SUPERREGION_H_INCLUDED
+#ifndef SUPERREGION_H
+#define SUPERREGION_H
 
 // stl
 #include <vector>
@@ -8,19 +8,20 @@
 #include "main.h"
 #include "Region.h"
 
+class Region;
+
 class SuperRegion
 {
 public:
 	SuperRegion();
 	SuperRegion(const int& pReward);
-
 	virtual ~SuperRegion();
-	void addRegion(const int& region);
+
+	void addRegion(Region* region);
 	size_t size() { return regions.size(); }
 
-private:
-	std::vector<int> regions;
+	std::vector<Region*> regions;
 	int reward;
 };
 
-#endif // SUPERREGION_H_INCLUDED
+#endif // SUPERREGION_H
