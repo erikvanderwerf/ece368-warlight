@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "Attack.h"
+#include "Defense.h"
 #include "Map.h"
 #include "Move.h"
 
@@ -35,16 +37,19 @@ public:
      */
     void calculateTurn();
 
-	Map map;
+	Map map; //why is this public
 private:
+    
+    Attack m_attack_advisor;
+    
+    Defense m_defense_advisor;
         
-    //std::vector<SUGGESTED_MOVE> m_suggestedAttacks;
+    std::vector<Move> m_suggestedAttacks;
         
     //suggested moves with to and from as the same region
-    //std::vector<SUGGESTED_MOVE> m_suggestedDefenses;
+    //std::vector<Move> m_suggestedDefenses;
         
-    //suggested moves with from region as null
-    //std::vector<SUGGESTED_MOVE> m_suggestedReinforcements;
+    std::vector<Move> m_suggestedReinforcements;
         
     //std::vector<SUGGESTED_MOVE> m_plannedMoves;
 

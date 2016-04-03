@@ -1,6 +1,11 @@
 #include "General.h"
 
-General::General() {}
+General::General() {
+    m_suggestedAttacks = std::vector<Move>();
+    m_suggestedReinforcements = std::vector<Move>();
+    m_attack_advisor = Attack();
+    m_defense_advisor = Defense();
+}
 
 General::~General() {
     
@@ -12,46 +17,25 @@ int General::pickStartingRegions(std::vector<int> pickfrom) {
 
 std::vector<Move> General::getAttack() {
 	if (map.isDirty()) calculateTurn();
-	return std::vector<Move>();
+	return m_suggestedAttacks;
 }
 
 
 std::vector<Move> General::getDeployment() {
 	if (map.isDirty()) calculateTurn();
-	return std::vector<Move>();
+	return m_suggestedReinforcements;
 }
 
 
 void General::calculateTurn() {
-    
-}
-
-
-/*
-void General::placeReinforcements(int numReinforcements){
-    float sumWeights = 0;
-    for(SuggestedMove* sugRein : m_suggestedReinforcements){
-        sumWeights += sugRein->percentageMove;
-    }
-    if(sumWeights == 0){
-         std::cerr << "\nERROR NO SUGGESTED MOVES IN FUNCTION 'placeReinforcements' in General.cpp\n";
-         return;
-    }
-    
-    for(SuggestedMove* sugRein : m_suggestedReinforcements){
-        m_bot->addReinforcements(sugRein->to, sugRein->percentageMove * numReinforcements / sumWeights);
-    }
-}
-
-
-void General::makeMoves(){
-    
-    
-    
-    //clear suggestion arrays for next turn
+    // map.undirty() ?
     m_suggestedAttacks.clear();
-    m_suggestedDefenses.clear();
     m_suggestedReinforcements.clear();
-    m_plannedMoves.clear();
+    
+    delete m_suggestedAttacks;
+    m_suggestedAttacks = m_attack_advisor.generageMoves();
+    
+    
+    
 }
-*/
+
