@@ -39,19 +39,17 @@ public:
 
 	Map map; //why is this public
 private:
+
+	Attack attack_advisor;
     
-    Attack m_attack_advisor;
-    
-    Defense m_defense_advisor;
+    Defense defense_advisor;
         
-    std::vector<Move> m_suggestedAttacks;
+    std::vector<Move> suggestedAttacks;
         
     //suggested moves with to and from as the same region
-    //std::vector<Move> m_suggestedDefenses;
+    std::vector<Move> suggestedDefenses;
         
-    std::vector<Move> m_suggestedReinforcements;
-        
-    //std::vector<SUGGESTED_MOVE> m_plannedMoves;
+    std::vector<Move> suggestedReinforcements;
 
 };
 

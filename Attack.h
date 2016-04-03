@@ -4,7 +4,10 @@
 #include "MoveGenerator.h"
 
 class Attack: public MoveGenerator {
-	virtual std::vector<Move> generageMoves();
+
+public:
+
+	std::vector<Move> generateMoves();
 };
 
 #endif // !ATTACK_H
