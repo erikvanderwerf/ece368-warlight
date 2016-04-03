@@ -1,10 +1,10 @@
 #include "General.h"
 
 General::General() {
-    suggestedAttacks = std::vector<Move>();
-    suggestedReinforcements = std::vector<Move>();
-    attack_advisor = Attack();
-    defense_advisor = Defense();
+    Attack* a = new Attack(&map);
+    Defense* d = new Defense(&map);
+    advisors.push_back(a);
+    advisors.push_back(d);
 }
 
 General::~General() {
@@ -17,25 +17,17 @@ int General::pickStartingRegions(std::vector<int> pickfrom) {
 
 std::vector<Move> General::getAttack() {
 	if (map.isDirty()) calculateTurn();
-	return suggestedAttacks;
+	return std::vector<Move>();
 }
 
 
 std::vector<Move> General::getDeployment() {
 	if (map.isDirty()) calculateTurn();
-	return suggestedReinforcements;
+	return std::vector<Move>();
 }
 
 
 void General::calculateTurn() {
      //map.undirty() ?
-     suggestedAttacks.clear();
-     suggestedReinforcements.clear();
-    
-     //delete m_suggestedAttacks;
-     suggestedAttacks = attack_advisor.generateMoves();
-    
-    
-    
 }
 
