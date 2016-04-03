@@ -55,9 +55,19 @@ void Bot::makeMoves()
 			continue;
 
 		int target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
+	//	
+	//	std::vector<int> neutral = this -> getNeutralNeighbors(target);
+	//	
+	//	std::cout << "[";
+	//	for (int index=0; index<neutral.size(); index++)
+	//	{
+	//		printf("%d, ", neutral.at(index));
+	//	}
+	//	std::cout << "]";
+	//	
 		// prefer enemy regions
 		for ( unsigned k = 0; k < 5; ++k)
-		{
+		{			
 			if(regions[target].getOwner() != ME) break;
 			target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
 		}
@@ -219,7 +229,7 @@ void Bot::moveArmies(const unsigned& noRegion, const unsigned& toRegion, const i
 		else
 		{
 			regions[noRegion].setArmies(
-					regions[noRegion].getArmies() + nbArmies - std::round(regions[toRegion].getArmies() * 0.7));
+				regions[noRegion].getArmies() + nbArmies - std::round(regions[toRegion].getArmies() * 0.7));
 			regions[toRegion].setArmies(regions[toRegion].getArmies() - std::round(nbArmies * 0.6));
 		}
 	}
@@ -229,3 +239,85 @@ void Bot::resetRegionsOwned()
 {
 	ownedRegions.clear();
 }
+
+//std::vector<int> Bot::getNeutralNeighbors(int node)
+//{
+//	std::vector<int> result;
+//	for (int i=0; i<regions.at(node).getNbNeighbors(); i++)
+//	{
+//		int regionIndex = regions.at(node).getNeighbor(i);
+//		if (regions.at(regionIndex).getOwner() == NEUTRAL)
+//		{
+//			result.push_back(regionIndex);
+//		}
+//	}
+//	return result;
+//}
+
+//std::vector<int> Bot::getEnemyNeighbors(int node)
+//{
+//	std::vector<int> result;
+//	for (int i=0; i<regions.at(node).getNbNeighbors(); i++)
+//	{
+//		int regionIndex = regions.at(node).getNeighbor(i);
+//		if (regions.at(regionIndex).getOwner() == ENEMY)
+//		{
+//			result.push_back(regionIndex);
+//		}
+//	}  
+//	return result;
+//}
+
+//std::vector<int> Bot::getPlayerNeighbors(int node)
+//{
+//	std::vector<int> result;
+//	for (int i=0; i<regions.at(node).getNbNeighbors(); i++)
+//	{
+//		int regionIndex = regions.at(node).getNeighbor(i);
+//		if (regions.at(regionIndex).getOwner() == ME)
+//		{
+//			result.push_back(regionIndex);
+//		}
+//	}
+//	return result;
+//}
+
+//int Bot::numNeighborsNotMe(int node)
+//{
+//	int result = 0;
+//	for (int i=0; i<regions.at(node).getNbNeighbors(); i++)
+//	{
+//		int regionIndex = regions.at(node).getNeighbor(i);
+//		if (regions.at(regionIndex).getOwner() != ME)
+//		{
+//			result++;
+//		}
+//	}
+//	return result;
+//}
+
+//struct regionComparerStruct {
+//  std::vector<Region> regs;
+  
+//  bool operator() (int regionIndex0,int regionIndex1) {
+//  	return (regs.at(regionIndex0).getArmies() > regs.at(regionIndex1).getArmies());
+//  }
+//} regionComparer;
+
+//std::vector<int> Bot::getLargestEnemies(int node)  
+//{
+//	std::vector<int> result;
+//	for (int i=0; i<regions.at(node).getNbNeighbors(); i++)
+//	{
+//		int regionIndex = regions.at(node).getNeighbor(i);
+//		if (regions.at(regionIndex).getOwner() == ENEMY)
+//		{
+//			result.push_back(regionIndex);
+//		}
+//	}
+//	
+//	regionComparer.regs = regions;
+//	std::sort(result.begin(), result.end(), regionComparer);
+//	
+//	return result;
+//}

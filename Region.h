@@ -7,6 +7,8 @@
 
 // project
 #include "main.h"
+#include <sstream>
+#include <algorithm>
 
 class Region
 {
@@ -25,7 +27,18 @@ public:
 	int getNeighbor(const size_t& index) const ;
 	int getNbNeighbors() const;
 
+	//Utilities
+	std::vector<int> getNeutralNeighbors(int Node);    ///Returns a vector of indexes that are the neutral neightbors
+    std::vector<int> getEnemyNeighbors(int Node);    ///Returns a vector of indexes that are enemy neighbors
+    std::vector<int> getPlayerNeighbors(int Node);   ///Returns a vector of indexes that are owned by you
+    std::vector<int> getLargestEnemies(int Node);     ///Returns a vector of the indexes of the enemies from largest to smallest
+    int numNeighborsNotMe(int Node); ///returns an integer of the number of neighbors that are not you at a certain region
+    
+    bool compareRegionsByArmies(std::vector<Region> regs, int regionIndex0, int regionIndex1);
+	int armiesLeft;
+	
 private:
+	std::vector<Region> regions;
 	std::vector<int> neighbors;
 	int id;
 	int superRegion;
