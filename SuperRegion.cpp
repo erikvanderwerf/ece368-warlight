@@ -19,3 +19,18 @@ void SuperRegion::addRegion(Region* region)
 {
 	regions.push_back(region);
 }
+
+std::vector<int> SuperRegion::getRegions()
+{
+	return regions;
+}
+
+int SuperRegion::getReward()
+{
+	return reward;
+}
+
+//int SuperRegion::getOwnedRegions(Player owner)
+//{
+	
+//}

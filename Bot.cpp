@@ -68,9 +68,19 @@ void Bot::makeMoves()
 			continue;
 
 		int target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
+	//	
+	//	std::vector<int> neutral = this -> getNeutralNeighbors(target);
+	//	
+	//	std::cout << "[";
+	//	for (int index=0; index<neutral.size(); index++)
+	//	{
+	//		printf("%d, ", neutral.at(index));
+	//	}
+	//	std::cout << "]";
+	//	
 		// prefer enemy regions
 		for ( unsigned k = 0; k < 5; ++k)
-		{
+		{			
 			if(regions[target].getOwner() != ME) break;
 			target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
 		}
@@ -142,6 +152,4 @@ void Bot::opponentMovement(const unsigned &noRegion, const unsigned &toRegion, c
 	(void) noRegion;
 	(void) toRegion;
 	(void) nbArmies;
-
-	// TODO: STUB
 }

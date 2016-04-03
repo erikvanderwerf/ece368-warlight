@@ -7,6 +7,7 @@
 #include <vector>
 #include <cmath>
 #include <sstream>
+#include <algorithm>
 
 // project
 #include "main.h"
@@ -49,6 +50,19 @@ public:
 	void setTimePerMove(const int& newTimePerMove);
 	void setMaxRounds(const int& newMaxRounds);
 
+    /// Utilities
+    //std::vector<int> getNeutralNeighbors(int Node);    ///Returns a vector of indexes that are the neutral neightbors
+    //std::vector<int> getEnemyNeighbors(int Node);    ///Returns a vector of indexes that are enemy neighbors
+    //std::vector<int> getPlayerNeighbors(int Node);   ///Returns a vector of indexes that are owned by you
+    //std::vector<int> getLargestEnemies(int Node);     ///Returns a vector of the indexes of the enemies from largest to smallest
+    //std::vector<Regions> getNeighborsInSameSuperRegion(Region Node);
+    //int numNeighborsNotMe(int Node);   ///returns an integer of the number of neighbors that are not you at a certain region
+    //int getNumberOfArmies(int Node);
+    //std::vector<int> getOwnedRegions(int Node);
+    //std::vector<int> getNeutralNeighbors(int Node);    ///Returns a vector of indexes that are the neutral neightbors
+    //std::vector<int> getEnemyNeighbors(int Node);    ///Returns a vector of indexes that are enemy neighbors
+    //std::vector<int> getPlayerNeighbors(int Node);
+    
 	/**
 	 * Adds armies to a region
 	 * @param noRegion region to add to
