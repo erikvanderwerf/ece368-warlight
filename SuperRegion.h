@@ -19,6 +19,10 @@ public:
 
 	void addRegion(Region* region);
 	size_t size() { return regions.size(); }
+	
+	std::vector<int> getRegions();
+	int getReward();
+	std::vector<int> getOwnedRegions(Player owner);
 
 	std::vector<Region*> regions;
 	int reward;
