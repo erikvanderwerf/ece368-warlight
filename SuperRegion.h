@@ -5,7 +5,6 @@
 #include <vector>
 
 // project
-#include "main.h"
 #include "Region.h"
 
 class Region;
@@ -20,10 +19,12 @@ public:
 	void addRegion(Region* region);
 	size_t size() { return regions.size(); }
 	
-	std::vector<int> getRegions();
-	int getReward();
-	std::vector<int> getOwnedRegions(Player owner);
+	std::vector<Region*> getRegions();
+	std::vector<Region*> getOwnedRegions(Player owner);
 
+	int getReward();
+
+private:
 	std::vector<Region*> regions;
 	int reward;
 };

@@ -1,6 +1,7 @@
 //stl
-#include <stdio.h>
+#include <algorithm>
 #include <iostream>
+#include <stdio.h>
 //project
 #include "Region.h"
 #include "SuperRegion.h"
@@ -40,83 +41,71 @@ std::vector<Region*> Region::getNeighbors() const
 	return neighbors;
 }
 
-std::vector<int> Region::getNeutralNeighbors(int node)
+std::vector<Region*> Region::getNeutralNeighbors()
 {
-	std::vector<int> result;
-	for (int i=0; i<regions.at(node).getNbNeighbors(); i++)
-	{
-		int regionIndex = regions.at(node).getNeighbor(i);
-		if (regions.at(regionIndex).getOwner() == NEUTRAL)
-		{
-			result.push_back(regionIndex);
+	std::vector<Region*> result;
+
+	for (Region* r: neighbors) {
+		if (r->owner == NEUTRAL) {
+			result.push_back(r);
 		}
 	}
+
 	return result;
 }
 
-std::vector<int> Region::getEnemyNeighbors(int node)
+std::vector<Region*> Region::getEnemyNeighbors()
 {
-	std::vector<int> result;
-	for (int i=0; i<regions.at(node).getNbNeighbors(); i++)
-	{
-		int regionIndex = regions.at(node).getNeighbor(i);
-		if (regions.at(regionIndex).getOwner() == ENEMY)
-		{
-			result.push_back(regionIndex);
-		}
-	}  
-	return result;
-}
+	
+	std::vector<Region*> result;
 
-std::vector<int> Region::getPlayerNeighbors(int node)
-{
-	std::vector<int> result;
-	for (int i=0; i<regions.at(node).getNbNeighbors(); i++)
-	{
-		int regionIndex = regions.at(node).getNeighbor(i);
-		if (regions.at(regionIndex).getOwner() == ME)
-		{
-			result.push_back(regionIndex);
+	for (Region* r: neighbors) {
+		if (r->owner == ENEMY) {
+			result.push_back(r);
 		}
 	}
+
 	return result;
 }
 
-int Region::numNeighborsNotMe(int node)
+std::vector<Region*> Region::getPlayerNeighbors()
 {
-	int result = 0;
-	for (int i=0; i<regions.at(node).getNbNeighbors(); i++)
-	{
-		int regionIndex = regions.at(node).getNeighbor(i);
-		if (regions.at(regionIndex).getOwner() != ME)
-		{
+	
+	std::vector<Region*> result;
+
+	for (Region* r: neighbors) {
+		if (r->owner == ME) {
+			result.push_back(r);
+		}
+	}
+
+	return result;
+}
+
+int Region::numNeighborsNotMe()
+{
+	
+	int result;
+
+	for (Region* r: neighbors) {
+		if (r->owner != ME) {
 			result++;
 		}
 	}
+
 	return result;
 }
 
-struct regionComparerStruct {
-  std::vector<Region> regs;
-  
-  bool operator() (int regionIndex0,int regionIndex1) {
-  	return (regs.at(regionIndex0).getArmies() > regs.at(regionIndex1).getArmies());
-  }
-} regionComparer;
-
-std::vector<int> Region::getLargestEnemies(int node)  
+std::vector<Region*> Region::getLargestEnemies()  
 {
-	std::vector<int> result;
-	for (int i=0; i<regions.at(node).getNbNeighbors(); i++)
-	{
-		int regionIndex = regions.at(node).getNeighbor(i);
-		if (regions.at(regionIndex).getOwner() == ENEMY)
-		{
-			result.push_back(regionIndex);
-		}
-	}
+	std::vector<Region*> result = getEnemyNeighbors();
 	
-	regionComparer.regs = regions;
+	struct regionComparerStruct {
+		bool operator() (Region* regionIndex0, Region* regionIndex1) {
+  			return (regionIndex0->getArmies() > regionIndex1->getArmies());
+  		}
+	} regionComparer;
+
 	std::sort(result.begin(), result.end(), regionComparer);
 	
 	return result;

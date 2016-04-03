@@ -20,7 +20,7 @@ void SuperRegion::addRegion(Region* region)
 	regions.push_back(region);
 }
 
-std::vector<int> SuperRegion::getRegions()
+std::vector<Region*> SuperRegion::getRegions()
 {
 	return regions;
 }
@@ -30,7 +30,13 @@ int SuperRegion::getReward()
 	return reward;
 }
 
-//int SuperRegion::getOwnedRegions(Player owner)
-//{
-	
-//}
+std::vector<Region*> SuperRegion::getOwnedRegions(Player owner)
+{
+	std::vector<Region*> result;
+	for (Region* r: regions) {
+		if (r->getOwner() == owner) {
+			result.push_back(r);
+		}
+	}
+	return result;
+}
