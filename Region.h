@@ -47,5 +47,4 @@ private:
 	int armies;
 };
 
-
 #endif // REGION_H
