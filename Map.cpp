@@ -51,3 +51,25 @@ SuperRegion & Map::getSuperRegion(int id) {
 bool Map::isDirty() {
 	return dirty;
 }
+
+std::unordered_set<Region*> Map::getRegionsOwnedBy(Player player) {
+	std::unordered_set<Region*> ret;
+	for (Region r: regions) {
+		if (r.getOwner() == player) {
+			ret.insert(&r);
+		}
+	}
+	return ret;
+}
+
+std::unordered_set<Region*> Map::getAdjacentPlayer(Player player) {
+	std::unordered_set<Region*> ret;
+	for (Region* r: getRegionsOwnedBy(ME)) {
+		for (Region* adj: r->getNeighbors()) {
+			if (adj->getOwner() == player) {
+				ret.insert(adj);
+			}
+		}
+	}
+	return ret;
+}
