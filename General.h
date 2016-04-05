@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "MoveGenerator.h"
 #include "Attack.h"
 #include "Defense.h"
 #include "Map.h"
@@ -28,7 +29,7 @@ public:
     /** std::vector<Move> getDeployment();
 	 * Returns the calculated deployment for this turn.
      */  
-    std::vector<Move> getDeployment();
+    std::vector<Move> getDeployment(int numArmies);
         
     /** void calculateTurn(float time);
      *  This function prioritizes different troop placements and
@@ -39,8 +40,15 @@ public:
 
 	Map map;
 private:
-    // stop making class variables for attack and defense
-    std::vector<MoveGenerator *> advisors;
+    
+    MoveGenerator* attackAdvisor; //dont use a vector, it keeps the code from knowing if a move is an attack or defense
+    
+    MoveGenerator* defenseAdvisor;
+    
+    std::vector<Move> attacks;
+    
+    std::vector<Move> defenses;
+    
 };
 
-#endif // !GENERAL_H
+#endif // GENERAL_H

@@ -3,8 +3,8 @@
 General::General() {
     Attack* a = new Attack(&map);
     Defense* d = new Defense(&map);
-    advisors.push_back(a);
-    advisors.push_back(d);
+    attackAdvisor = a;
+    defenseAdvisor = d;
 }
 
 General::~General() {
@@ -17,17 +17,32 @@ int General::pickStartingRegions(std::vector<int> pickfrom) {
 
 std::vector<Move> General::getAttack() {
 	if (map.isDirty()) calculateTurn();
-	return std::vector<Move>();
+	std::vector<Move> moves;
+	moves.insert(moves.end(), attacks.begin(), attacks.end());
+	moves.insert(moves.end(), defenses.begin(), defenses.end());
+	return moves;
 }
 
 
-std::vector<Move> General::getDeployment() {
+std::vector<Move> General::getDeployment(int numArmies) {
 	if (map.isDirty()) calculateTurn();
-	return std::vector<Move>();
+	std::vector<Move> reinforcements;
+	for(Move mv : attacks){
+        Move deploy;
+        deploy.to = mv.from;
+        deploy.number_of_troops = numArmies / 2;
+        if(numArmies == 1) deploy.number_of_troops += 1;
+        numArmies /= 2;
+        mv.number_of_troops += deploy.number_of_troops; //add the new reinforcements to the attack
+        
+        reinforcements.push_back(deploy);
+	}
+	return reinforcements;
 }
 
 
 void General::calculateTurn() {
-     //map.undirty() ?
+     attacks = attackAdvisor->generateMoves();
+     defenses = defenseAdvisor->generateMoves();
 }
 
