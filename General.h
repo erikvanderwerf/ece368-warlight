@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include <fstream>
 #include "Attack.h"
 #include "Defense.h"
 #include "Map.h"
@@ -50,6 +51,8 @@ private:
     std::vector<Move> suggestedDefenses;
         
     std::vector<Move> suggestedReinforcements;
+
+	std::ofstream myfile;
 
 };
 

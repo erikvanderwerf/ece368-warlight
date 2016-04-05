@@ -115,6 +115,7 @@ private:
 	int maxRounds;
 	Parser parser;
 
+	std::ofstream myfile;
 };
 
 #endif // BOT_H

@@ -5,6 +5,8 @@ General::General() {
     suggestedReinforcements = std::vector<Move>();
     attack_advisor = Attack();
     defense_advisor = Defense();
+
+    myfile.open("Output.txt");
 }
 
 General::~General() {
@@ -34,8 +36,6 @@ void General::calculateTurn() {
     
      //delete m_suggestedAttacks;
      suggestedAttacks = attack_advisor.generateMoves();
-    
-    
-    
+
 }
 

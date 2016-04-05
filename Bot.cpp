@@ -1,5 +1,6 @@
 // stl
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <cstdlib>
 
@@ -13,6 +14,7 @@
 Bot::Bot() :
 		armiesLeft(0), timebank(0), timePerMove(0), maxRounds(0), parser(this)
 {
+
 }
 
 Bot::~Bot()
@@ -68,19 +70,19 @@ void Bot::makeMoves()
 			continue;
 
 		int target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
-	//	
+	//
 	//	std::vector<int> neutral = this -> getNeutralNeighbors(target);
-	//	
+	//
 	//	std::cout << "[";
 	//	for (int index=0; index<neutral.size(); index++)
 	//	{
 	//		printf("%d, ", neutral.at(index));
 	//	}
 	//	std::cout << "]";
-	//	
+	//
 		// prefer enemy regions
 		for ( unsigned k = 0; k < 5; ++k)
-		{			
+		{
 			if(regions[target].getOwner() != ME) break;
 			target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
 		}
