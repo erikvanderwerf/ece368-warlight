@@ -5,9 +5,11 @@
 
 class Move {
 public:
+	Move(Region* from, Region* to, int armies);
+
     Region* from;
     Region* to;
-    int number_of_troops;
+    int armies;
 };
 
 #endif // !MOVE_H
