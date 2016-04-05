@@ -38,19 +38,11 @@ public:
      */
     void calculateTurn();
 
-	Map map; //why is this public
+	Map map;
 private:
 
-	Attack attack_advisor;
-    
-    Defense defense_advisor;
-        
-    std::vector<Move> suggestedAttacks;
-        
-    //suggested moves with to and from as the same region
-    std::vector<Move> suggestedDefenses;
-        
-    std::vector<Move> suggestedReinforcements;
+    // stop making class variables for attack and defense
+    std::vector<MoveGenerator *> advisors;
 
 	std::ofstream myfile;
 

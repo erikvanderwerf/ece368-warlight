@@ -20,9 +20,9 @@ public:
 	void updateRegion(const unsigned& id, const Player& player, const int& armies);
 
 	/// Getters
+	bool isDirty();
 	Region& getRegion(int id);
 	SuperRegion& getSuperRegion(int id);
-	bool isDirty();
 
 private:
 	bool dirty;
