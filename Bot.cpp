@@ -39,11 +39,14 @@ void Bot::pickStartingRegion()
 
 void Bot::placeArmies()
 {
-	for (Move m : general.getDeployment()) {
+    std::vector<Move> deploys = general.getDeployment(armiesLeft);
+	for (Move m : deploys) {
 		std::cout << botName << "place_armies" << m.from->id << " " << m.number_of_troops << ", ";
 	}
 	std::cout << std::endl;
-
+    //how does the map class get updated info on our army movements?
+    //do we need an updateArmies() function in Map?
+    
 	//addArmies(ownedRegions[region], armiesLeft);
 }
 
@@ -60,39 +63,6 @@ void Bot::makeMoves()
 			" " << m.number_of_troops << ", ";
 	}
 	std::cout << std::endl;
-
-	/*std::vector<std::string> moves;
-	for (size_t j = 0; j < ownedRegions.size(); ++j)
-	{
-		std::stringstream move;
-		int i = ownedRegions[j];
-		if (regions[i].getArmies() <= 1)
-			continue;
-
-		int target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
-	//
-	//	std::vector<int> neutral = this -> getNeutralNeighbors(target);
-	//
-	//	std::cout << "[";
-	//	for (int index=0; index<neutral.size(); index++)
-	//	{
-	//		printf("%d, ", neutral.at(index));
-	//	}
-	//	std::cout << "]";
-	//
-		// prefer enemy regions
-		for ( unsigned k = 0; k < 5; ++k)
-		{
-			if(regions[target].getOwner() != ME) break;
-			target = regions[i].getNeighbor(std::rand() % regions[i].getNbNeighbors());
-		}
-		move << botName << " attack/transfer " << i << " "
- 				<< target << " "
-				<< (regions[i].getArmies() - 1);
-		moves.push_back(move.str());
-	}
-
-	std::cout << string::join(moves) << std::endl;*/
 }
 
 /*void Bot::addWasteland(const unsigned &noRegion)
