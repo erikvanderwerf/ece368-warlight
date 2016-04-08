@@ -1,6 +1,7 @@
 #pragma once
 
-#include<string>
+#include <unordered_set>
+#include <string>
 
 #include "Region.h"
 #include "SuperRegion.h"
@@ -23,6 +24,9 @@ public:
 	bool isDirty();
 	Region& getRegion(int id);
 	SuperRegion& getSuperRegion(int id);
+
+	std::unordered_set<Region*> getAdjacentPlayer(Player player);
+	std::unordered_set<Region*> getRegionsOwnedBy(Player player);
 
 private:
 	bool dirty;

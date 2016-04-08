@@ -1,6 +1,7 @@
 //stl
 #include <algorithm>
 #include <iostream>
+#include <iterator>
 #include <stdio.h>
 //project
 #include "Region.h"
@@ -26,9 +27,9 @@ Region::~Region()
 {
 }
 
-void Region::addNeighbor(Region * neighbor)
+void Region::addNeighbor(Region* neighbor)
 {
-	neighbors.push_back(neighbor);
+	neighbors.insert(neighbor);
 }
 
 int Region::getNbNeighbors() const
@@ -36,55 +37,44 @@ int Region::getNbNeighbors() const
 	return neighbors.size();
 }
 
-std::vector<Region*> Region::getNeighbors() const
+std::unordered_set<Region*> Region::getNeighbors() const
 {
 	return neighbors;
 }
 
-std::vector<Region*> Region::getNeutralNeighbors()
+
+std::unordered_set<Region*> Region::getNeighbors(Player player) const 
 {
 	std::vector<Region*> result;
 
-	for (Region* r: neighbors) {
+	for (Region* r : neighbors) {
 		if (r->owner == NEUTRAL) {
 			result.push_back(r);
 		}
 	}
-
-	return result;
 }
 
-std::vector<Region*> Region::getEnemyNeighbors()
+
+std::unordered_set<Region*> Region::getNeutralNeighbors()
 {
-	
-	std::vector<Region*> result;
-
-	for (Region* r: neighbors) {
-		if (r->owner == ENEMY) {
-			result.push_back(r);
-		}
-	}
-
-	return result;
+	return getNeighbors(NEUTRAL);
 }
 
-std::vector<Region*> Region::getPlayerNeighbors()
+
+std::unordered_set<Region*> Region::getEnemyNeighbors()
 {
-	
-	std::vector<Region*> result;
-
-	for (Region* r: neighbors) {
-		if (r->owner == ME) {
-			result.push_back(r);
-		}
-	}
-
-	return result;
+	return getNeighbors(ENEMY);
 }
+
+
+std::unordered_set<Region*> Region::getPlayerNeighbors()
+{
+	return getNeighbors(ME);
+}
+
 
 int Region::numNeighborsNotMe()
 {
-	
 	int result;
 
 	for (Region* r: neighbors) {
@@ -92,20 +82,21 @@ int Region::numNeighborsNotMe()
 			result++;
 		}
 	}
-
 	return result;
 }
 
-std::vector<Region*> Region::getLargestEnemies()  
-{
-	std::vector<Region*> result = getEnemyNeighbors();
-	
-	struct regionComparerStruct {
-		bool operator() (Region* regionIndex0, Region* regionIndex1) {
-  			return (regionIndex0->getArmies() > regionIndex1->getArmies());
-  		}
-	} regionComparer;
 
+bool regionComparer(Region* l, Region* r) {
+	return l->getArmies() > r->getArmies();
+}
+
+
+std::vector<Region*> Region::getLargestEnemies()
+{
+	std::vector<Region*> result;
+	std::unordered_set<Region*> enemies = getNeighbors(ENEMY);
+
+	std::copy(enemies.begin(), enemies.end(), std::back_inserter(result));
 	std::sort(result.begin(), result.end(), regionComparer);
 	
 	return result;
