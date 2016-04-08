@@ -26,6 +26,7 @@ Bot::~Bot()
 
 void Bot::playGame()
 {
+	std::cerr << "ECE 368 Bot v0.1" << std::endl;
 	while (true) {
 		// Wait for input
 		parser.parseInput();
@@ -41,7 +42,7 @@ void Bot::placeArmies()
 {
     std::vector<Move> deploys = general.getDeployment(armiesLeft);
 	for (Move m : deploys) {
-		std::cout << botName << "place_armies" << m.from->id << " " << m.number_of_troops << ", ";
+		std::cout << botName << "place_armies" << m.from->id << " " << m.armies << ", ";
 	}
 	std::cout << std::endl;
     //how does the map class get updated info on our army movements?
@@ -60,7 +61,7 @@ void Bot::makeMoves()
 	/// When outputting multiple moves they must be seperated by a comma
 	for (Move m : general.getAttack()) {
 		std::cout << botName << "attack/transfer" << m.from << " " << m.to <<
-			" " << m.number_of_troops << ", ";
+			" " << m.armies << ", ";
 	}
 	std::cout << std::endl;
 }

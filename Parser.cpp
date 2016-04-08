@@ -106,6 +106,7 @@ void Parser::parseSettings()
 		unsigned noRegion;
 		while (std::cin >> noRegion)
 		{
+			std::cerr << "Starting: " << noRegion << std::endl;
 			theBot->addStartingRegion(noRegion);
 			if (lineEnds())
 				break;
@@ -200,6 +201,8 @@ void Parser::parseRegions()
 
 void Parser::parsePickStartingRegion()
 {
+	std::cout << theBot->general.pickStartingRegions(theBot->startingRegionsreceived);
+	/*
 	int region;
 	int delay;
 	std::cin >> delay;
@@ -211,6 +214,7 @@ void Parser::parsePickStartingRegion()
 		if (lineEnds())
 			break;
 	}
+	*/
 }
 
 void Parser::parseOpponentStartingRegions()

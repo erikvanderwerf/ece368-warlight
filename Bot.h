@@ -103,10 +103,11 @@ public:
 	General general;
 	std::string botName;
 	std::string opponentBotName;
-private:
-	std::ifstream in;
+	
 	std::vector<int> startingRegionsreceived;
 	std::vector<unsigned> opponentStartingRegions;
+private:
+	std::ifstream in;
 	//std::vector<int> ownedRegions;
 	//std::vector<int> wastelands;
 	int armiesLeft;

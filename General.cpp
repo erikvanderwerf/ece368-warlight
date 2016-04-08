@@ -4,15 +4,9 @@ General::General() {
 
     Attack* a = new Attack(&map);
     Defense* d = new Defense(&map);
-<<<<<<< HEAD
-    advisors.push_back(a);
-    advisors.push_back(d);
 
-    myfile.open("Output.txt");
-=======
     attackAdvisor = a;
     defenseAdvisor = d;
->>>>>>> generalDev
 }
 
 General::~General() {
@@ -38,10 +32,10 @@ std::vector<Move> General::getDeployment(int numArmies) {
 	for(Move mv : attacks){
         Move deploy;
         deploy.to = mv.from;
-        deploy.number_of_troops = numArmies / 2;
-        if(numArmies == 1) deploy.number_of_troops += 1;
+        deploy.armies = numArmies / 2;
+        if(numArmies == 1) deploy.armies += 1;
         numArmies /= 2;
-        mv.number_of_troops += deploy.number_of_troops; //add the new reinforcements to the attack
+        mv.armies += deploy.armies; //add the new reinforcements to the attack
         
         reinforcements.push_back(deploy);
 	}
