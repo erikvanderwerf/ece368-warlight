@@ -4,9 +4,9 @@
 #include "MoveGenerator.h"
 #include "Map.h"
 
-class Attack: public MoveGenerator {
+class Attack : public MoveGenerator {
 public:
-	Attack(Map* m) {map = m;};
+	Attack(Map* m) { map = m; };
 	std::vector<Move> generateMoves();
 private:
 	Map* map;

@@ -12,21 +12,22 @@ class Region;
 class SuperRegion
 {
 public:
-	SuperRegion();
-	SuperRegion(const int& pReward);
+	//SuperRegion(const int id);
+	SuperRegion(const int id, const int& pReward);
 	virtual ~SuperRegion();
 
-	void addRegion(Region* region);
 	size_t size() { return regions.size(); }
-	
-	std::vector<Region*> getRegions();
-	std::vector<Region*> getOwnedRegions(Player owner);
 
-	int getReward();
+	std::unordered_set<Region*> getRegions();
+	std::unordered_set<Region*> getOwnedRegions(Player owner);
 
-private:
-	std::vector<Region*> regions;
+	void addRegion(Region* region);
+	void print();
+
+	int id;
 	int reward;
+private:
+	std::unordered_set<Region*> regions;
 };
 
 #endif // SUPERREGION_H

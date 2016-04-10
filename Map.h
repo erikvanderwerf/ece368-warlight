@@ -22,14 +22,19 @@ public:
 
 	/// Getters
 	bool isDirty();
-	Region& getRegion(int id);
-	SuperRegion& getSuperRegion(int id);
+	int getCentrality(Region* region);
+	Region* getRegion(int id);
+	SuperRegion* getSuperRegion(int id);
 
 	std::unordered_set<Region*> getAdjacentPlayer(Player player);
 	std::unordered_set<Region*> getRegionsOwnedBy(Player player);
 
+	/// Misc
+	void print();
+	void setClean() { dirty = false; }
+
 private:
 	bool dirty;
-	std::vector<Region> regions;
-	std::vector<SuperRegion> superRegions;
+	std::vector<Region*> regions;
+	std::vector<SuperRegion*> superRegions;
 };

@@ -9,11 +9,11 @@ public:
 	Move() {};
 	Move(Region* from, Region* to, int armies);
 
-	std::ostream& operator<< (std::ostream& stream/*, const Move& move*/);
+	void print();
 
-    Region* from;
-    Region* to;
-    int armies;
+	Region* from;
+	Region* to;
+	int armies;
 };
 
 #endif // !MOVE_H

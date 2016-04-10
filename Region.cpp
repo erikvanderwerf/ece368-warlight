@@ -9,15 +9,15 @@
 
 Region::Region()
 	: id(0)
-	, superRegion()
+	, super()
 	, owner(NEUTRAL)
 	, armies(0)
 {
 }
 
-Region::Region(const int& pId, SuperRegion& pSuperRegion)
+Region::Region(const int& pId, SuperRegion* pSuperRegion)
 	: id(pId)
-	, superRegion(&pSuperRegion)
+	, super(pSuperRegion)
 	, owner(NEUTRAL)
 	, armies(0)
 {
@@ -37,47 +37,44 @@ int Region::getNbNeighbors() const
 	return neighbors.size();
 }
 
-std::unordered_set<Region*> Region::getNeighbors() const
+std::unordered_set<Region*> Region::getNeighbors()
 {
 	return neighbors;
 }
 
-
-std::unordered_set<Region*> Region::getNeighbors(Player player) const 
+std::unordered_set<Region*> Region::getNeighbors(Player player)
 {
-	std::vector<Region*> result;
+	std::unordered_set<Region*> result;
 
 	for (Region* r : neighbors) {
-		if (r->owner == NEUTRAL) {
-			result.push_back(r);
+		if (r->owner == player) {
+			result.insert(r);
 		}
 	}
-}
 
+	return result;
+}
 
 std::unordered_set<Region*> Region::getNeutralNeighbors()
 {
 	return getNeighbors(NEUTRAL);
 }
 
-
 std::unordered_set<Region*> Region::getEnemyNeighbors()
 {
 	return getNeighbors(ENEMY);
 }
-
 
 std::unordered_set<Region*> Region::getPlayerNeighbors()
 {
 	return getNeighbors(ME);
 }
 
-
 int Region::numNeighborsNotMe()
 {
-	int result;
+	int result = 0;
 
-	for (Region* r: neighbors) {
+	for (Region* r : neighbors) {
 		if (r->owner != ME) {
 			result++;
 		}
@@ -85,11 +82,9 @@ int Region::numNeighborsNotMe()
 	return result;
 }
 
-
 bool regionComparer(Region* l, Region* r) {
 	return l->getArmies() > r->getArmies();
 }
-
 
 std::vector<Region*> Region::getLargestEnemies()
 {
@@ -98,6 +93,19 @@ std::vector<Region*> Region::getLargestEnemies()
 
 	std::copy(enemies.begin(), enemies.end(), std::back_inserter(result));
 	std::sort(result.begin(), result.end(), regionComparer);
-	
+
 	return result;
+}
+
+void Region::print()
+{
+	int sr = super != nullptr ? super->id : 0;
+	std::string own = convertPlayer(owner);
+
+	std::cerr << id << "\tOwner: " << own << "\tArmies: " << armies << "\tSuper: " << sr;// << std::endl;
+	std::cerr << "\t" << neighbors.size() << "Neighbors: ";
+	for (Region* r : neighbors) {
+		std::cerr << r->id << ", ";
+	}
+	std::cout << std::endl;
 }

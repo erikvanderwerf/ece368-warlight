@@ -7,6 +7,7 @@ Move::Move(Region* f, Region* t, int a) {
 	armies = a;
 }
 
-std::ostream& Move::operator<< (std::ostream& stream/*, const Move& move*/) {
-	stream << "Move: " << from->id << " " << from->id << std::endl;
+void Move::print()
+{
+	std::cerr << "Move: " << from->id << "\t" << to->id << "\t" << armies << std::endl;
 }

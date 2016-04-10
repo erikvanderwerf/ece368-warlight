@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdexcept>
+#include <unordered_set>
 
 // project
 #include "Bot.h"
@@ -12,7 +13,7 @@
 #include "tools/StringManipulation.h"
 
 Parser::Parser(Bot* bot) :
-		theBot(bot)
+	theBot(bot)
 {
 }
 
@@ -36,12 +37,15 @@ void Parser::parseInput()
 		parsePickStartingRegion();
 	else if (inputType == "go")
 		parseGo();
+	else if (inputType == "exit")
+		theBot->game_running = false;
+	else if (inputType == "print")
+		parsePrint();
 	else
 	{
 		// Invalid inputType
 		std::string line;
 		getline(std::cin, line);
-		std::cerr  << inputType << " " << line << std::endl;
 	}
 }
 
@@ -106,11 +110,13 @@ void Parser::parseSettings()
 		unsigned noRegion;
 		while (std::cin >> noRegion)
 		{
-			std::cerr << "Starting: " << noRegion << std::endl;
 			theBot->addStartingRegion(noRegion);
 			if (lineEnds())
 				break;
 		}
+	}
+	else if (settingType == "starting_pick_amount") {
+		std::cin >> theBot->startingPickAmount;
 	}
 }
 
@@ -136,7 +142,6 @@ void Parser::parseUpdateMap()
 
 void Parser::parseOpponentMoves()
 {
-
 	std::string playerName, action;
 	unsigned noRegion, toRegion;
 	int nbArmies;
@@ -191,8 +196,7 @@ void Parser::parseSuperRegions()
 void Parser::parseRegions()
 {
 	unsigned super, region;
-	while (std::cin >> region >> super)
-	{
+	while (std::cin >> region >> super) {
 		theBot->general.map.addRegion(region, super);
 		if (lineEnds())
 			break;
@@ -201,20 +205,19 @@ void Parser::parseRegions()
 
 void Parser::parsePickStartingRegion()
 {
-	std::cout << theBot->general.pickStartingRegions(theBot->startingRegionsreceived);
-	/*
+	int time;
+	std::unordered_set<Region*> regions;
+	std::cin >> time;
+
+	std::string line;
+	std::getline(std::cin, line);
+	std::stringstream str_stream(line);
 	int region;
-	int delay;
-	std::cin >> delay;
-	theBot->setTimebank(delay);
-	theBot->clearStartingRegions();
-	while (std::cin >> region)
-	{
-		theBot->addStartingRegion(region);
-		if (lineEnds())
-			break;
+	while (str_stream >> region) {
+		regions.insert(theBot->general.map.getRegion(region));
 	}
-	*/
+
+	theBot->pickStartingRegion(time, regions);
 }
 
 void Parser::parseOpponentStartingRegions()
@@ -228,9 +231,20 @@ void Parser::parseOpponentStartingRegions()
 	}
 }
 
+void Parser::parsePrint()
+{
+	std::string what;
+	std::cin >> what;
+	if (what == "map") {
+		theBot->general.map.print();
+	}
+	else if (what == "armiesleft") {
+		std::cerr << theBot->armies << std::endl;
+	}
+}
+
 void Parser::parseNeighbors()
 {
-
 	unsigned region;
 	std::string neighbors;
 	std::vector<std::string> neighbors_flds;

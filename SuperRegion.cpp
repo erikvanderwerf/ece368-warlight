@@ -1,14 +1,18 @@
+#include <iostream>
+
 //project
 #include "SuperRegion.h"
 
-SuperRegion::SuperRegion()
+/*SuperRegion::SuperRegion(const int id)
 	: reward(0)
 {
-}
+	this->id = id;
+}*/
 
-SuperRegion::SuperRegion(const int& pReward)
+SuperRegion::SuperRegion(const int id, const int& pReward)
 	: reward(pReward)
 {
+	this->id = id;
 }
 
 SuperRegion::~SuperRegion()
@@ -17,25 +21,29 @@ SuperRegion::~SuperRegion()
 
 void SuperRegion::addRegion(Region* region)
 {
-	regions.push_back(region);
+	regions.insert(region);
 }
 
-std::vector<Region*> SuperRegion::getRegions()
+std::unordered_set<Region*> SuperRegion::getRegions()
 {
 	return regions;
 }
 
-int SuperRegion::getReward()
+void SuperRegion::print()
 {
-	return reward;
+	std::cerr << id << ": " << reward << "\tR: ";
+	for (Region* r : regions) {
+		std::cerr << r->id << " ";
+	}
+	std::cerr << std::endl;
 }
 
-std::vector<Region*> SuperRegion::getOwnedRegions(Player owner)
+std::unordered_set<Region*> SuperRegion::getOwnedRegions(Player owner)
 {
-	std::vector<Region*> result;
-	for (Region* r: regions) {
+	std::unordered_set<Region*> result;
+	for (Region* r : regions) {
 		if (r->getOwner() == owner) {
-			result.push_back(r);
+			result.insert(r);
 		}
 	}
 	return result;

@@ -20,8 +20,8 @@ std::vector<Move> Attack::generateMoves()
 	for (Region* n : adjacentOpponent) {
 		std::unordered_set<Region*> myregions = n->getNeighbors(ME);
 		for (Region *my : myregions) {
-			Move move(my, n, n->getArmies());
-			
+			Move move(my, n, 2 * n->getArmies());
+
 			// Lower value = higher priority
 			int move_value = move.armies - move.from->getArmies();
 
@@ -33,8 +33,8 @@ std::vector<Move> Attack::generateMoves()
 	for (Region* n : adjacentNeutral) {
 		std::unordered_set<Region*> myregions = n->getNeighbors(ME);
 		for (Region *my : myregions) {
-			Move move(my, n, n->getArmies());
-			
+			Move move(my, n, 2 * n->getArmies());
+
 			// Lower value = higher priority
 			int move_value = move.armies - move.from->getArmies();
 

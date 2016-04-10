@@ -13,4 +13,6 @@ enum Player {
 	NEUTRAL
 };
 
+std::string convertPlayer(Player p);
+
 #endif
